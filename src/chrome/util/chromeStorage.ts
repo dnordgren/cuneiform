@@ -1,8 +1,10 @@
-const getColor = (callback: Function): void => {
+type GetColorCallback = (color: string) => void;
+
+const getColor = (callback: GetColorCallback): void => {
   chrome.storage.sync.get('color', (items: {
     [key: string]: any
   }) => {
-    callback(items['color']);
+    callback(items.color);
   });
 };
 

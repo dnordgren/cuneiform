@@ -1,19 +1,19 @@
+import { setColor } from '../util/chromeStorage';
+
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color: '#3aa757' }, () => {
-    console.log('The color is green.');
-  });
+  setColor('#3aa757');
 });
 
 chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
   chrome.declarativeContent.onPageChanged.addRules([
     {
+      actions: [
+        new chrome.declarativeContent.ShowPageAction(),
+      ],
       conditions: [
         new chrome.declarativeContent.PageStateMatcher({
           pageUrl: { hostEquals: 'developer.chrome.com' },
         }),
-      ],
-      actions: [
-        new chrome.declarativeContent.ShowPageAction(),
       ],
     },
   ]);

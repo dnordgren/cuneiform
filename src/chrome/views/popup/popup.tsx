@@ -1,20 +1,15 @@
 import * as React from 'react';
 
-import { getColor } from '../../util/chromeStorage';
+import Button from '../shared/button/button';
 
-const optionButtonStyle = {
-  height: '30px',
-  width: '30px',
-  outline: 'none',
-  margin: '10px',
-};
+import { getColor } from '../../util/chromeStorage';
 
 export default class Popup extends React.Component {
   state = {
     buttonColor: '#000000',
   };
 
-  componentDidMount() {
+  componentDidMount () {
     getColor((color: string) => {
       this.setState(() => ({
         buttonColor: color,
@@ -37,14 +32,11 @@ export default class Popup extends React.Component {
     });
   }
 
-  render() {
+  render () {
     return (
-      <button
+      <Button
+        color={this.state.buttonColor}
         onClick={this.setTabColor}
-        style={{
-          ...optionButtonStyle,
-          backgroundColor: this.state.buttonColor,
-        }}
       />
     );
   }
