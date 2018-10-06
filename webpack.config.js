@@ -3,24 +3,25 @@ const path = require('path');
 const config = {
   entry: {
     background: './src/chrome/background',
-    options: './src/chrome/views/options'
+    options: './src/chrome/views/options',
+    popup: './src/chrome/views/popup',
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist/js')
-  }
+    path: path.resolve(__dirname, 'dist/js'),
+  },
 };
 
 module.exports = (env, argv) => {

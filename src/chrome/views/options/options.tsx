@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { setColor } from '../../util/chromeStorage';
+
 const optionButtonColors = [
   '#3aa757',
   '#e8453c',
@@ -7,21 +9,28 @@ const optionButtonColors = [
   '#4688f1',
 ];
 
+const optionButtonStyle = {
+  height: '30px',
+  width: '30px',
+  outline: 'none',
+  margin: '10px',
+};
+
 export default class OptionsPage extends React.Component {
   render() {
     const buttons = optionButtonColors.map(color => (
-      <p key={`btn-${color}`}>
-        <button
-          onClick={
-            () => {
-              chrome.storage.sync.set({ color });
-              console.log(`Set color to ${color}`);
-            }
+      <button
+        key={`btn-${color}`}
+        onClick={
+          () => {
+            setColor(color);
           }
-          style={{ backgroundColor: color }}
-        >
-        </button>
-      </p>
+        }
+        style={{
+          ...optionButtonStyle,
+          backgroundColor: color,
+        }}
+      />
     ));
 
     return buttons;
