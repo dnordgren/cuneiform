@@ -1,10 +1,10 @@
 const path = require('path');
 
-module.exports = {
+const config = {
   entry: {
-    background: './chrome/extension/background',
+    background: './src/chrome/background',
+    options: './src/chrome/views/options'
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -21,4 +21,12 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist/js')
   }
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'development') {
+    config.devtool = 'source-map'
+  }
+
+  return config;
 };

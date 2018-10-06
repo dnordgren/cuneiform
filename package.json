@@ -7,17 +7,22 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "webpack -p --env=production",
-    "build:dev": "webpack",
+    "build": "webpack -p --env=production --mode=production",
+    "build:dev": "webpack --mode=development",
     "clean": "rimraf dist",
-    "watch": "webpack -w"
+    "watch": "webpack -w --mode=development"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.74",
+    "@types/react": "^16.4.14",
     "rimraf": "^2.6.2",
     "ts-loader": "^5.2.1",
     "typescript": "^3.1.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
   }
 }
