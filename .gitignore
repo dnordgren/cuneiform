@@ -1,0 +1,11 @@
+# Build artifacts
+dist
+
+# Packages
+node_modules
+
+# Platform-specific
+.DS_Store
+
+# Logs
+*.log
