@@ -3,6 +3,7 @@ const path = require('path');
 const config = {
   entry: {
     background: './src/chrome/background',
+    content_script: './src/chrome/content_script',
     options: './src/chrome/views/options',
     popup: './src/chrome/views/popup',
   },

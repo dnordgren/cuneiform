@@ -9,11 +9,27 @@ export default class Popup extends React.Component {
     buttonColor: '#000000',
   };
 
-  componentDidMount () {
+  componentDidMount (): void {
     getColor((color: string) => {
       this.setState(() => ({
         buttonColor: color,
       }));
+    });
+
+    this.firePopupAlert();
+  }
+
+  firePopupAlert = (): void => {
+    chrome.tabs.query({
+      active: true, currentWindow: true
+    }, (tabs: Array<chrome.tabs.Tab>) => {
+      const activeTabId = tabs[0].id;
+      if (!activeTabId) {
+        return;
+      }
+      chrome.tabs.sendMessage(activeTabId, {
+        msg: 'yo',
+      });
     });
   }
 

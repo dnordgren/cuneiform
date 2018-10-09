@@ -46,7 +46,7 @@
     "prefer-object-spread": [true],
     "prefer-template": [true],
     "quotemark": [true, "single", "jsx-double", "avoid-escape"],
-    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "semicolon": [true, "always"],
     "space-before-function-paren": [true],
     "space-within-parens": [false],
     "strict-boolean-expressions": [true],
