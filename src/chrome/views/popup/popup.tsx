@@ -4,9 +4,15 @@ import Button from '../shared/button/button';
 
 import { getColor } from '../../util/chromeStorage';
 
-export default class Popup extends React.Component {
+interface State {
+  buttonColor: string;
+  overlayEnabled: boolean;
+}
+
+export default class Popup extends React.Component<{}, State> {
   state = {
     buttonColor: '#000000',
+    overlayEnabled: false,
   };
 
   componentDidMount (): void {
@@ -15,11 +21,9 @@ export default class Popup extends React.Component {
         buttonColor: color,
       }));
     });
-
-    this.firePopupAlert();
   }
 
-  firePopupAlert = (): void => {
+  toggleOverlay = (): void => {
     chrome.tabs.query({
       active: true, currentWindow: true
     }, (tabs: Array<chrome.tabs.Tab>) => {
@@ -27,24 +31,18 @@ export default class Popup extends React.Component {
       if (!activeTabId) {
         return;
       }
-      chrome.tabs.sendMessage(activeTabId, {
-        msg: 'yo',
-      });
-    });
-  }
 
-  setTabColor = (): void => {
-    chrome.tabs.query({
-      active: true, currentWindow: true
-    }, (tabs: Array<chrome.tabs.Tab>) => {
-      const tabId = tabs[0].id;
-      if (!tabId) {
-        return;
-      }
-      chrome.tabs.executeScript(
-        tabId,
-        { code: `document.body.style.backgroundColor = '${this.state.buttonColor}';` }
-      );
+      // TODO abstract into FSA-style TS-ified messaging util
+      chrome.tabs.sendMessage(activeTabId, {
+        type: 'toggleOverlay',
+        overlayEnabled: this.state.overlayEnabled,
+      });
+
+      this.setState((prevState: State) => {
+        return {
+          overlayEnabled: !prevState.overlayEnabled,
+        };
+      });
     });
   }
 
@@ -52,7 +50,7 @@ export default class Popup extends React.Component {
     return (
       <Button
         color={this.state.buttonColor}
-        onClick={this.setTabColor}
+        onClick={this.toggleOverlay}
       />
     );
   }
