@@ -1,16 +1,20 @@
 import createModal from '../util/createModal';
 
+import ChromeMessage from '../messages/chromeMessage';
+import ChromeMessageTypes from '../messages/chromeMessageTypes';
+
 chrome.runtime.onMessage.addListener(
-  (message: any): void => {
+  (message: ChromeMessage): void => {
     if (!message.type) {
       return;
     }
 
     switch(message.type) {
-      case 'toggleOverlay':
+      case ChromeMessageTypes.ToggleOverlay:
         // TODO disableOverlay
-        if (!message.overlayEnabled) {
+        if (!(message.payload && message.payload.overlayEnabled)) {
           // TODO find all matching documentation IDs; render in beacons
+
           createModal();
         }
         break;

@@ -4,6 +4,9 @@ import Button from '../shared/button/button';
 
 import { getColor } from '../../util/chromeStorage';
 
+import { createToggleOverlayMessage } from '../../messages/messageCreators';
+import sendMessage from '../../messages/sendMessage';
+
 interface State {
   buttonColor: string;
   overlayEnabled: boolean;
@@ -24,25 +27,13 @@ export default class Popup extends React.Component<{}, State> {
   }
 
   toggleOverlay = (): void => {
-    chrome.tabs.query({
-      active: true, currentWindow: true
-    }, (tabs: Array<chrome.tabs.Tab>) => {
-      const activeTabId = tabs[0].id;
-      if (!activeTabId) {
-        return;
-      }
+    const toggleOverlayChromeMessage = createToggleOverlayMessage(this.state.overlayEnabled);
+    sendMessage(toggleOverlayChromeMessage);
 
-      // TODO abstract into FSA-style TS-ified messaging util
-      chrome.tabs.sendMessage(activeTabId, {
-        type: 'toggleOverlay',
-        overlayEnabled: this.state.overlayEnabled,
-      });
-
-      this.setState((prevState: State) => {
-        return {
-          overlayEnabled: !prevState.overlayEnabled,
-        };
-      });
+    this.setState((prevState: State) => {
+      return {
+        overlayEnabled: !prevState.overlayEnabled,
+      };
     });
   }
 
