@@ -4,12 +4,21 @@ import Button from '../shared/button/button';
 
 import { getColor } from '../../util/chromeStorage';
 
-export default class Popup extends React.Component {
+import { createToggleOverlayMessage } from '../../messages/messageCreators';
+import sendMessage from '../../messages/sendMessage';
+
+interface State {
+  buttonColor: string;
+  overlayEnabled: boolean;
+}
+
+export default class Popup extends React.Component<{}, State> {
   state = {
     buttonColor: '#000000',
+    overlayEnabled: false,
   };
 
-  componentDidMount () {
+  componentDidMount (): void {
     getColor((color: string) => {
       this.setState(() => ({
         buttonColor: color,
@@ -17,18 +26,14 @@ export default class Popup extends React.Component {
     });
   }
 
-  setTabColor = (): void => {
-    chrome.tabs.query({
-      active: true, currentWindow: true
-    }, (tabs: Array<chrome.tabs.Tab>) => {
-      const tabId = tabs[0].id;
-      if (!tabId) {
-        return;
-      }
-      chrome.tabs.executeScript(
-        tabId,
-        { code: `document.body.style.backgroundColor = '${this.state.buttonColor}';` }
-      );
+  toggleOverlay = (): void => {
+    const toggleOverlayChromeMessage = createToggleOverlayMessage(this.state.overlayEnabled);
+    sendMessage(toggleOverlayChromeMessage);
+
+    this.setState((prevState: State) => {
+      return {
+        overlayEnabled: !prevState.overlayEnabled,
+      };
     });
   }
 
@@ -36,7 +41,7 @@ export default class Popup extends React.Component {
     return (
       <Button
         color={this.state.buttonColor}
-        onClick={this.setTabColor}
+        onClick={this.toggleOverlay}
       />
     );
   }
