@@ -9,7 +9,7 @@ export default class Modal extends React.Component<Props> {
   render () {
     return (
       <ReactModal
-        isOpen={true}
+        isOpen={this.props.isOpen}
       >
         <h2>Hello!</h2>
         <p>This is documentation by Cuneiform</p>
