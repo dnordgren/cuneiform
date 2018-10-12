@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
 
+import createBeacons from '../util/createBeacons';
 import createModal from '../util/createModal';
 
 import { toggleOverlayEnabled } from '../store/actions/toggleOverlayEnabled';
@@ -20,15 +21,13 @@ chrome.runtime.onMessage.addListener(
 
     switch(message.type) {
       case ChromeMessageTypes.ToggleOverlay:
-        // TODO disableOverlay
         if (
           !(message.payload && message.payload.overlayEnabled)
           && !overlayInitialized
         ) {
-          // TODO find all matching documentation IDs; render in beacons
+          initializeOverlay();
 
-          createModal(store);
-          overlayInitialized = true;
+          return;
         }
         store.dispatch(toggleOverlayEnabled());
         break;
@@ -37,3 +36,9 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
+
+const initializeOverlay = (): void => {
+  createBeacons();
+  createModal(store);
+  overlayInitialized = true;
+};

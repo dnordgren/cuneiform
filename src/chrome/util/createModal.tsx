@@ -9,7 +9,7 @@ import Modal from '../views/shared/modal/index';
 const createModal = (store: Store): void => {
   // Create a div at the end of the page that we can render our Modal into.
   const appNode = document.createElement('div');
-  appNode.setAttribute('id', '#cuneiform-modal');
+  appNode.setAttribute('id', 'cuneiform-modal');
   document.body.appendChild(appNode);
 
   ReactModal.setAppElement(appNode);
