@@ -1,18 +1,40 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
-import Beacon from '../views/shared/beacon/beacon';
+import { getStore } from '../store/index';
+
+import Beacon from '../views/shared/beacon/index';
+
+interface SiteBeacon {
+  domId: string;
+  title: string;
+  body: string;
+}
 
 // https://developer.chrome.com/home
-const chromeDevDomIds = [
-  'logo',
-  'site-sections',
-  'developer-news',
+const chromeDevBeacons: Array<SiteBeacon> = [
+  {
+    domId: 'logo',
+    title: 'Logo',
+    body: 'This is the logo.',
+  },
+  {
+    domId: 'site-sections',
+    title: 'Site Sections',
+    body: 'Sections of the site.',
+  },
+  {
+    domId: 'developer-news',
+    title: 'Developer News',
+    body: 'News for developers.',
+  },
 ];
 
 const createBeacons = (): void => {
-  chromeDevDomIds.forEach(id => {
-    const targetNode = document.getElementById(id);
+  const store = getStore();
+  chromeDevBeacons.forEach(siteBeacon => {
+    const targetNode = document.getElementById(siteBeacon.domId);
     if (!targetNode) {
       return;
     }
@@ -23,7 +45,7 @@ const createBeacons = (): void => {
     } = targetNode.getBoundingClientRect();
 
     const beaconNode = document.createElement('div');
-    beaconNode.setAttribute('id', `cuneiform-beacon-${id}`);
+    beaconNode.setAttribute('id', `cuneiform-beacon-${siteBeacon.domId}`);
     beaconNode.style.position = 'absolute';
     beaconNode.style.top = `${nodeTop}px`;
     beaconNode.style.left = `${nodeLeft}px`;
@@ -37,10 +59,14 @@ const createBeacons = (): void => {
     targetNode.insertAdjacentElement('afterend', beaconNode);
 
     ReactDOM.render(
-      React.createElement(Beacon),
+      <Provider store={store}>
+        <Beacon
+          title={siteBeacon.title}
+          body={siteBeacon.body}
+        />
+      </Provider>,
       beaconNode,
     );
   });
 };
-
 export default createBeacons;

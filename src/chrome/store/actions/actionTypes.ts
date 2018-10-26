@@ -1,5 +1,7 @@
 export enum ActionKeys {
   ToggleOverlayEnabled = 'ToggleOverlayEnabled',
+  SetOverlayTitle = 'SetOverlayTitle',
+  SetOverlayBody = 'SetOverlayBody',
 }
 
 export interface Action<P = null, M = null> {
@@ -13,5 +15,19 @@ export interface ToggleOverlayEnabled extends Action<{}> {
   type: ActionKeys.ToggleOverlayEnabled;
 }
 
+export interface SetOverlayTitle extends Action<{
+  title: string,
+}> {
+  type: ActionKeys.SetOverlayTitle;
+}
+
+export interface SetOverlayBody extends Action<{
+  body: string,
+}> {
+  type: ActionKeys.SetOverlayBody;
+}
+
 export type ActionTypes =
-  | ToggleOverlayEnabled;
+  | ToggleOverlayEnabled
+  | SetOverlayTitle
+  | SetOverlayBody;
