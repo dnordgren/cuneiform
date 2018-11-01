@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '../shared/button/button';
+import { Button } from 'rebass';
 
 import { getColor } from '../../util/chromeStorage';
 
@@ -39,10 +39,14 @@ export default class Popup extends React.Component<{}, State> {
 
   render () {
     return (
-      <Button
-        color={this.state.buttonColor}
-        onClick={this.toggleOverlay}
-      />
+      <div onClick={this.toggleOverlay}>
+        <Button
+          bg="blue"
+          variant="primary"
+        >
+          Toggle Overlay
+        </Button>
+      </div>
     );
   }
 }
