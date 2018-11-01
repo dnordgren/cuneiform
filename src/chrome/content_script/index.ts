@@ -1,17 +1,15 @@
-import { createStore } from 'redux';
-
 import createBeacons from '../util/createBeacons';
 import createModal from '../util/createModal';
 
 import { toggleOverlayEnabled } from '../store/actions/toggleOverlayEnabled';
-import reducers from '../store/index';
+import { getStore } from '../store/index';
 
 import ChromeMessage from '../messages/chromeMessage';
 import ChromeMessageTypes from '../messages/chromeMessageTypes';
 
 let overlayInitialized = false;
 
-const store = createStore(reducers);
+const store = getStore();
 
 chrome.runtime.onMessage.addListener(
   (message: ChromeMessage): void => {

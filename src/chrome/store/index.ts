@@ -1,14 +1,32 @@
 import {
   combineReducers,
+  createStore,
   Dispatch as ReduxDispatch,
+  Store,
 } from 'redux';
 
 import { ActionTypes } from './actions/actionTypes';
 import { overlay } from './reducers/overlay';
 import { AppState } from './stateTypes';
 
-export type Dispatch = ReduxDispatch<ActionTypes>;
+type Dispatch = ReduxDispatch<ActionTypes>;
 
-export default combineReducers<AppState>({
+const reducers = combineReducers<AppState>({
   overlay,
 });
+
+let store: Store;
+const getStore = () => {
+  if (!store) {
+    store = createStore(reducers);
+  }
+
+  return store;
+};
+
+export  {
+  AppState,
+  Dispatch,
+  getStore,
+  reducers,
+};

@@ -1,18 +1,16 @@
 import * as React from 'react';
 import * as ReactModal from 'react-modal';
 
-interface Props {
-  isOpen: boolean;
-}
+import { ModalProps } from './index';
 
-export default class Modal extends React.Component<Props> {
+export default class Modal extends React.Component<ModalProps> {
   render () {
     return (
       <ReactModal
         isOpen={this.props.isOpen}
       >
-        <h2>Hello!</h2>
-        <p>This is documentation by Cuneiform</p>
+        <h2>{this.props.title}</h2>
+        <p>{this.props.body}</p>
       </ReactModal>
     );
   }
