@@ -10,7 +10,7 @@ const getColor = (callback: GetColorCallback): void => {
 
 const setColor = (color: string): void => {
   chrome.storage.sync.set({ color }, () => {
-    console.log(`color set to ${color}`);
+    console.debug(`color set to ${color}`);
   });
 };
 

@@ -5,21 +5,25 @@ import Button from '../shared/button/button';
 import { setColor } from '../../util/chromeStorage';
 
 const optionButtonColors = [
-  '#3aa757',
-  '#e8453c',
-  '#f9bb2d',
-  '#4688f1',
+  '#55a734',
+  '#c91a1a',
+  '#ffdd00',
+  '#2d83c9',
+  '#621296',
+  '#ff9000',
 ];
 
 export default class OptionsPage extends React.Component {
+  setColor = (color: string): void => {
+    setColor(color);
+  }
+
   render () {
     const buttons = optionButtonColors.map(color => (
       <Button
         color={color}
         key={`btn-${color}`}
-        onClick={() => {
-          setColor(color);
-        }}
+        onClick={setColor}
       />
     ));
 
