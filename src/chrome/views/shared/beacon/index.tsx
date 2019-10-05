@@ -1,4 +1,4 @@
-import { connect, ConnectedComponentClass } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setOverlayBody } from '../../../store/actions/setOverlayBody';
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps): DispatchPro
   };
 };
 
-const connectedBeacon: ConnectedComponentClass<typeof Beacon, OwnProps> = connect(
+const connectedBeacon = connect(
   null,
   mapDispatchToProps,
 )(Beacon);

@@ -14,14 +14,16 @@ const optionButtonColors = [
 ];
 
 export default class OptionsPage extends React.Component {
+  setColor = (color: string): void => {
+    setColor(color);
+  }
+
   render () {
     const buttons = optionButtonColors.map(color => (
       <Button
         color={color}
         key={`btn-${color}`}
-        onClick={() => {
-          setColor(color);
-        }}
+        onClick={setColor}
       />
     ));
 

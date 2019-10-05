@@ -9,14 +9,18 @@ const buttonStyles = {
 
 interface Props {
   color: string;
-  onClick: () => void;
+  onClick: (color: string) => void;
 }
 
 export default class Button extends React.Component<Props> {
+  setColor = (): void => {
+    this.props.onClick(this.props.color);
+  }
+
   render () {
     return (
       <button
-        onClick={this.props.onClick}
+        onClick={this.setColor}
         style={{
           ...buttonStyles,
           backgroundColor: this.props.color,
