@@ -1,6 +1,9 @@
 import * as React from 'react';
 
-import Button from '../shared/button/button';
+import {
+  Button,
+  Flex,
+} from 'rebass';
 
 import { setColor } from '../../util/chromeStorage';
 
@@ -19,14 +22,27 @@ export default class OptionsPage extends React.Component {
   }
 
   render () {
+    const flexAlignment = { x: 3, y: 4 };
+    const buttonConfig = { mr: 2, height: '36px', width: '72px' };
     const buttons = optionButtonColors.map(color => (
       <Button
-        color={color}
+        bg={color}
+        {...buttonConfig}
+        // tslint:disable-next-line:jsx-no-lambda
+        onClick={() => setColor(color)}
         key={`btn-${color}`}
-        onClick={setColor}
       />
     ));
 
-    return buttons;
+    return (
+      <Flex
+        alignItems="center"
+        px={flexAlignment.x}
+        py={flexAlignment.y}
+        bg="muted"
+      >
+        {buttons}
+      </Flex>
+    );
   }
 }

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {
-  Box,
   Button,
   Flex,
   Heading,
@@ -44,10 +43,8 @@ export default class Popup extends React.Component<{}, State> {
 
   render () {
     const buttonText = `${this.state.overlayEnabled ? 'Disable' : 'Enable'} Overlay`;
-    const flexAlignment = {
-      x: 3,
-      y: 4,
-    };
+    const headingFontSize = 5;
+    const flexAlignment = { x: 3, y: 4 };
 
     return (
       <div style={{ height: '400px', width: '300px' }}>
@@ -56,16 +53,28 @@ export default class Popup extends React.Component<{}, State> {
           px={flexAlignment.x}
           py={flexAlignment.y}
           bg="muted"
+          flexDirection="column"
         >
-          <Heading>Cuneiform</Heading>
-          <Box mx="auto" />
-          <Button
-            bg="blue"
-            variant="primary"
-            onClick={this.toggleOverlay}
+          <Heading
+            fontFamily="sans-serif"
+            fontSize={headingFontSize}
           >
-            {buttonText}
-          </Button>
+            Cuneiform
+          </Heading>
+          <Flex
+            alignItems="center"
+            px={flexAlignment.x}
+            py={flexAlignment.y}
+            bg="muted"
+          >
+            <Button
+              bg={this.state.buttonColor}
+              variant="primary"
+              onClick={this.toggleOverlay}
+            >
+              {buttonText}
+            </Button>
+          </Flex>
         </Flex>
       </div>
     );
