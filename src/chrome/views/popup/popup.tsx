@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-import Button from '../shared/button/button';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+} from 'rebass';
 
 import { getColor } from '../../util/chromeStorage';
 
@@ -38,11 +43,31 @@ export default class Popup extends React.Component<{}, State> {
   }
 
   render () {
+    const buttonText = `${this.state.overlayEnabled ? 'Disable' : 'Enable'} Overlay`;
+    const flexAlignment = {
+      x: 3,
+      y: 4,
+    };
+
     return (
-      <Button
-        color={this.state.buttonColor}
-        onClick={this.toggleOverlay}
-      />
+      <div style={{ height: '400px', width: '300px' }}>
+        <Flex
+          alignItems="center"
+          px={flexAlignment.x}
+          py={flexAlignment.y}
+          bg="muted"
+        >
+          <Heading>Cuneiform</Heading>
+          <Box mx="auto" />
+          <Button
+            bg="blue"
+            variant="primary"
+            onClick={this.toggleOverlay}
+          >
+            {buttonText}
+          </Button>
+        </Flex>
+      </div>
     );
   }
 }
