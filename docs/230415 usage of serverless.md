@@ -28,6 +28,8 @@ Otherwise, I could schedule a Lambda with EventBridge to poll the table and invo
 
 Another Lambda on cron could monitor the jobs queue (Postgres table) for stuck or failed ingest jobs to retry.
 
+Perhaps job-queueing would be a good use-case for EventBridge or SQS?
+
 ### CRUD for nodes on page
 
 - Function 003: Get Cuneiform nodes for page.
