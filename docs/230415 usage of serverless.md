@@ -22,6 +22,12 @@ Having webserver pods specifically for queue consumption OR do both REST API and
 queue consumption would be a pain. Having serverless handle ingest would be
 easier to manage.
 
+I'll have to find some way to invoke the Lambdas to ingest as jobs are placed on the queue. Assuming I use a Postgres table as the queue, something like https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL-Lambda.html could work - this would be ideal as event-driven. The same Lambda that places the job on the queue could invoke a Lambda to handle the job (just using the queue as persistence/retry/poison queue). These would be event-driven. 
+
+Otherwise, I could schedule a Lambda with EventBridge to poll the table and invoke other Lambdas. Probably could set up polling within .NET on the web server, too.
+
+Another Lambda on cron could monitor the jobs queue (Postgres table) for stuck or failed ingest jobs to retry.
+
 ### CRUD for nodes on page
 
 - Function 003: Get Cuneiform nodes for page.
@@ -46,6 +52,12 @@ latency-sensitive. Serverless would be a pretty expensive way to power this
 functionality. Could hit concurrency issues within a tenant (concurrent search
 Lambdas executing within an AWS account tenant-per-customer or single-tenant
 account structure - 10K?).
+
+### Authentication
+
+Authentication with Cuneiform from client apps. Authentication from Cuneiform to customer wiki apps. These would be better fits for web server than serverless, to use full .NET stack.
+
+Save customer wiki auth info in AWS Secrets Manager (?) - avoid in database.
 
 ## Conclusion
 
